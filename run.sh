@@ -4,4 +4,6 @@
 
 set -eu
 
+docker version
 docker info
+docker --help
