@@ -5,16 +5,9 @@
 set -eu
 
 docker container ls -a
-docker container run -it --name proxy nginx bash
-docker container run -it --name ubuntu ubuntu bash
-#root@0e4f37dfedaa:/# apt-get update
-#root@0e4f37dfedaa:/# apt-get install -y curl
-#root@0e4f37dfedaa:/# curl google.com
-#root@0e4f37dfedaa:/# exit
-docker container start -ai ubuntu
-#root@0e4f37dfedaa:/# curl siteards.com
-#root@0e4f37dfedaa:/# exit
-docker container start ubuntu
-docker container exec -it ubuntu ps aux
-docker container ls -a
-docker container rm -f 0e4f3 eb6533
+docker container run -p 80:80 -d --name webhost nginx
+#015e134940414389fe18252e5b42a73596f84db555f252e0f1ca5970ff379a5a
+docker container port webhost
+#80/tcp -> 0.0.0.0:80
+docker container inspect --format "{{.NetworkSettings.IPAddress}}" webhost
+#172.17.0.2
