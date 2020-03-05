@@ -6,28 +6,22 @@ set -eu
 
 docker container ls -a
 docker image ls
-docker image tag nginx tudorrusu/nginx
-docker image push tudorrusu/nginx
-#The push refers to repository [docker.io/tudorrusu/nginx]
-#55a77731ed26: Preparing
-#71f2244bc14d: Preparing
-#f2cb0ecef392: Preparing
-#denied: requested access to the resource is denied
-docker login
-#Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
-#Username: tudorrusu
-#Password:
-#WARNING! Your password will be stored unencrypted in /home/tudor/.docker/config.json.
-#Configure a credential helper to remove this warning. See
-#https://docs.docker.com/engine/reference/commandline/login/#credentials-store
-#
-#Login Succeeded
-cat ~/.docker/config.json
-docker image push tudorrusu/nginx
-#The push refers to repository [docker.io/tudorrusu/nginx]
-#55a77731ed26: Mounted from library/nginx
-#71f2244bc14d: Mounted from library/nginx
-#f2cb0ecef392: Mounted from library/nginx
-#latest: digest: sha256:3936fb3946790d711a68c58be93628e43cbca72439079e16d154b5db216b58da size: 948
-docker image tag tudorrusu/nginx tudorrusu/nginx:testing
-docker image push tudorrusu/nginx:testing
+docker image build -t customnginx ./build/image_testing/
+#....
+#Step 6/7 : EXPOSE 80 443
+# ---> Running in ef1e1b57e1d0
+#Removing intermediate container ef1e1b57e1d0
+# ---> 435c797aef71
+#Step 7/7 : CMD ["nginx", "-g", "daemon off;"]
+# ---> Running in 9519038f4dd2
+#Removing intermediate container 9519038f4dd2
+# ---> cc87b51667f9
+#Successfully built cc87b51667f9
+#Successfully tagged customnginx:latest
+docker image ls
+#REPOSITORY                                                                TAG                 IMAGE ID            CREATED             SIZE
+#customnginx                                                               latest              cc87b51667f9        2 minutes ago       108MB
+#nginx                                                                     latest              6678c7c2e56c        21 hours ago        127MB
+#tudorrusu/nginx                                                           latest              6678c7c2e56c        21 hours ago        127MB
+#tudorrusu/nginx                                                           testing             6678c7c2e56c        21 hours ago        127MB
+
